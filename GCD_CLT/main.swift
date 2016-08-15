@@ -13,11 +13,15 @@ print("Hello, World!")
 class A {
     var someVal = 0
 
+    let concurrentQueue = dispatch_queue_create("queue_for_property", DISPATCH_QUEUE_CONCURRENT)
+
     @objc func increaseValueBy1000() {
-        for _ in 0..<1000 {
-            let v = someVal + 1
-            print(v)
-            someVal = v
+        dispatch_barrier_async(concurrentQueue) {
+            for _ in 0..<1000 {
+                let v = self.someVal + 1
+                print(v)
+                self.someVal = v
+            }
         }
     }
 }
