@@ -13,7 +13,7 @@ print("Hello, World!")
 class A {
     var someVal = 0
 
-    func increaseValueBy1000() {
+    @objc func increaseValueBy1000() {
         for _ in 0..<1000 {
             let v = someVal + 1
             print(v)
@@ -27,6 +27,9 @@ let instance = A()
 dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
     instance.increaseValueBy1000()
 }
+
+NSThread.detachNewThreadSelector(#selector(A.increaseValueBy1000), toTarget: instance, withObject: nil)
+
 
 instance.increaseValueBy1000()
 
