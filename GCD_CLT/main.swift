@@ -10,8 +10,25 @@ import Foundation
 
 print("Hello, World!")
 
+class A {
+    var someVal = 0
 
+    func increaseValueBy1000() {
+        for _ in 0..<1000 {
+            let v = someVal + 1
+            print(v)
+            someVal = v
+        }
+    }
+}
 
+let instance = A()
+
+dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+    instance.increaseValueBy1000()
+}
+
+instance.increaseValueBy1000()
 
 
 
